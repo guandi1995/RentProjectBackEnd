@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.dguan.project_rent.mapper.CustomerSignupMapper">
+    <insert id="insertCustomerInfo" parameterType="com.dguan.project_rent.dto.CustomerInfo">
+        insert into customer_info values (#{customer_id},#{customer_username},#{customer_password},#{customer_firstname},
+                                          #{customer_lastname},#{customer_address},#{customer_phone},#{customer_email},
+                                          #{customer_birth},#{customer_gender},#{customer_marital},#{customer_income},
+                                          #{customer_security1},#{customer_security1_ans},
+                                          #{customer_security2},#{customer_security2_ans})
+    </insert>
+
+    <select id="checkUser" resultType="com.dguan.project_rent.dto.CustomerInfo" parameterType="java.lang.String">
+        select * from customer_info where customer_username = #{username}
+    </select>
+
+</mapper>

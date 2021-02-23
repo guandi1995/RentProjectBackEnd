@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--parameterType-->
+
+<mapper namespace="com.dguan.project_rent.mapper.FloorPlanListMapper">
+    <select id="findFloorPlanList" resultType="com.dguan.project_rent.dto.FloorPlan">
+        select * from floorplan where community_id = #{community_id}
+    </select>
+
+    <select id="checkAvailability" resultType="java.util.HashMap">
+        select * FROM apartment_info apart left join floorplan fp
+            on fp.floorplan_num = apart.floorplan_id
+        where apart.community_id = #{community_id} and apart.apt_isavailable = #{apt_isavailable}
+    </select>
+</mapper>

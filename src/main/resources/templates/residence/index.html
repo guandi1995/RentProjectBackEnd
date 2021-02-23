@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Residence Welcome Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="../js/vue.min.js"></script>
+    <script type="text/javascript" src="../js/axios.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <style>
+
+    </style>
+
+</head>
+<body>
+
+<div id="app">
+    <el-container style="height:900px">
+        <el-aside width="20%" style="background-color:#545c64">
+
+            <div style="height: 80px; line-height: 80px; text-align: center; color: white">RECIDENCE CENTER</div>
+
+            <el-menu
+                    class="el-menu-vertical-demo"
+                    background-color="#545c64"
+                    text-color="#fff"
+                    active-text-color="#ffd04b">
+                <el-submenu v-for ="item in menu" :index ="item.id">
+                    <template slot="title">
+                        <i class="el-icon-location"></i>
+                        <span>{{item.name}}</span>
+                    </template>
+
+                    <el-menu-item-group v-for="child in item.children">
+                        <el-menu-item @click="addTab(child)" :index ="child.id">{{child.name}}</el-menu-item>
+                    </el-menu-item-group>
+
+                </el-submenu>
+
+            </el-menu>
+
+        </el-aside>
+
+        <el-container>
+            <el-header style="text-align: right; height: 10%; font-size: 14px; background: #545c64; line-height: 80px;">
+                <el-dropdown trigger="click">
+                    <a style="color: white;cursor:pointer;">
+                        <i class="el-icon-s-home" style="margin-right: 15px"></i>
+                        Hi,
+                        <span th:text="${session.residence_info.getResidence_firstname()}" style="color: white"></span>
+                    </a>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item icon="el-icon-close"><a style="color: black" th:href="@{/residence/logout}">Log out</a></el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </el-header>
+
+            <el-main>
+                <el-tabs v-model ="editableTabsValue" type="card" closable @tab-remove="removeTab">
+                    <el-tab-pane
+                            v-for="(item, index) in editableTabs"
+                            :key="item.id"
+                            :label="item.name"
+                            :name="item.id">
+                        <iframe :src = "item.url" width="99%" height="700px" style="border: 0"></iframe>
+                    </el-tab-pane>
+                </el-tabs>
+            </el-main>
+
+        </el-container>
+    </el-container>
+</div>
+
+<script>
+    var arr =[
+        {id:1, name:"Personal Center",children:[
+                {id:2, name:"Profile",url:"/residence/toProfile"}
+            ]},
+        {id:3, name:"Payments",children:[
+                {id:4, name:"Pay Rent Online",url:"/residence/toPayRent"},
+                {id:5, name:"Account History",url:"/residence/toAccountHistory"},
+                {id:6, name:"Saved Payment Accounts",url:"/residence/toSavedPaymentAccount"}
+            ]},
+        {id:7, name:"Settings",children:[
+                {id:8, name:"Change Password",url:"/residence/toChangePassword"},
+                {id:9, name:"General Settings",url:"/residence/toGeneralSettings"}
+            ]},
+    ];
+
+    new Vue({
+        el:'#app',
+        data:{
+            menu : arr,
+            editableTabs: [{
+                name: 'Welcome',
+                id: '0',
+                url: 'http://www.baidu.com',
+            }],
+            editableTabsValue:'',
+        },
+        methods: {
+            addTab(child) {
+                if (!this.editableTabs.includes(child)){
+                    this.editableTabs.push(child);
+                }
+                this.editableTabsValue = child.id;
+            },
+            removeTab(targetName) {
+                let tabs = this.editableTabs;
+                let activeName = this.editableTabsValue;
+                if (activeName === targetName) {
+                    tabs.forEach((tab, index) => {
+                        if (tab.id === targetName) {
+                            let nextTab = tabs[index + 1] || tabs[index - 1];
+                            if (nextTab) {
+                                activeName = nextTab.id;
+                            }
+                        }
+                    });
+                }
+                this.editableTabsValue = activeName;
+                this.editableTabs = tabs.filter(tab => tab.id !== targetName);
+            },
+        }
+    });
+</script>
+
+</body>
+</html>

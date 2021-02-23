@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Locations</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div style="height: 100px">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light" >
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 150px; margin-right: 150px; margin-bottom: 15px; margin-top: 15px">
+            <a class="navbar-brand" href="/">APARTMENT SERVICES</a>
+            <ul class="navbar-nav mr-auto navbar-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="/locations">LOCATIONS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/aboutus">ABOUT US</a>
+                </li>
+            </ul>
+            <button type="button" class="btn btn-outline-secondary my-2 my-sm-0" data-toggle="modal" data-target="#exampleModalCenter">
+                RESIDENCES
+            </button>
+        </div>
+    </nav>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <form class="form-inline" th:action="@{/cusLogin}" method="post">
+
+        <div class="modal-dialog modal-dialog-centered" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">LOG IN</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+                <div class="modal-body">
+                    <div style="margin-bottom: 30px">
+                        Username:
+                        <input type="password" name="customer_username" class="form-control mx-sm-3">
+                    </div>
+
+                    <div style="margin-bottom: 30px">
+                        Password:
+                        <input type="password" name="customer_password" class="form-control mx-sm-3" aria-describedby="passwordHelpInline">
+                    </div>
+
+                    <div>
+                        <a href="/signup">create account</a>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">LOG IN</button>
+                </div>
+
+
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<div class="jumbotron" style="text-align: center">
+    <h1 class="display-3">OUR LOCATIONS</h1>
+    <p class="lead">Our communities are located in Orange County and San Diego County</p>
+    <hr class="my-4">
+    <p>Communities in Los Angeles County is coming soon</p>
+    <p class="lead">
+        <a class="btn btn-outline-secondary btn-lg" href="#" role="button">Learn more</a>
+    </p>
+</div>
+
+<div class="card-deck" style="margin-left: 150px; margin-right: 150px; margin-bottom: 30px">
+    <div class="card shadow-lg bg-white rounded">
+        <img class="card-img-top" src="images/customer/sandiego.png" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">SAN DIEGO COUNTY</h5>
+            <p class="card-text">Idyllic sun-to-sand landscapes, globally-ranked universities, and many of California's
+                best entertainment, shopping, and dining experiences are just beyond your door when you live forward in
+                a San Diego apartment community.</p>
+            <div class="card-header">
+                Communities
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="/locations/san-diego/la-jolla-palms" class="text-secondary">La Jolla Palms</a></li>
+                <li class="list-group-item"><a href="/locations/san-diego/solazzo" class="text-secondary">Solazzo</a></li>
+                <li class="list-group-item"><a href="/locations/san-diego/vor" class="text-secondary">The Villas of Renaissance</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="images/customer/orange.png" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">ORANGE COUNTY</h5>
+            <p class="card-text">Our Orange County apartment communities offer residents a lifestyle that has it all.
+                Enjoy upscale shopping, dining, and cultural experiences plus top schools, innovative workplaces,
+                and America's most beautiful beaches just beyond your door.</p>
+            <div class="card-header">
+                Communities
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="/locations/orange/turtle-ridge" class="text-secondary">Turtle Ridge</a></li>
+                <li class="list-group-item"><a href="/locations/orange/pelican-hills" class="text-secondary">Pelican Hills</a></li>
+                <li class="list-group-item"><a href="/locations/orange/irvine-spectrum-vita" class="text-secondary">Irvine Spectrum Vita</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="images/customer/losangeles.png" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">LOS ANGELES COUNTY</h5>
+            <p class="card-text">With a luxury-first approach beyond the expected, our LA apartment communities
+                are designed to delight even the most discerning Angelenos. At home and out and about, enjoy the
+                best of everything in Southern California's most electrifiying city.</p>
+        </div>
+        <div class="card-header">
+            Communities(coming soon)
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><a href="#" class="text-secondary">Santa Monica Village</a></li>
+            <li class="list-group-item"><a href="#" class="text-secondary">Downtown M11</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="jumbotron" style="text-align: center">
+    <h1 class="display-3">Footer</h1>
+    <p class="lead">Our communities are located in Orange County and San Diego County</p>
+    <hr class="my-4">
+    <p>Communities in Los Angeles County is coming soon</p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    </p>
+</div>
+
+</body>
+</html>

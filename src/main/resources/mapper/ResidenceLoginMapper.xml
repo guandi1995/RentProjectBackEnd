@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dguan.project_rent.mapper.ResidenceLoginMapper">
+<!--    <select id="findUsernamePassword" resultType="com.dguan.project_rent.dto.CustomerInfo">-->
+<!--        SELECT * from customer_info where customer_username=#{customer_username}-->
+<!--                                      and customer_password=#{customer_password}-->
+<!--    </select>-->
+
+    <select id="findAptInfoById" resultType="com.dguan.project_rent.dto.ApartmentInfo">
+        select * from apartment_info where residence_id = #{id}
+    </select>
+
+    <select id="queryByUsername" resultType="com.dguan.project_rent.dto.ResidenceLogin">
+        select * from residence_login where residence_username = #{username}
+    </select>
+
+    <select id="queryResidenceInfoById" resultType="com.dguan.project_rent.dto.ResidenceInfo">
+        select * from residence_info where residence_id = #{id}
+    </select>
+
+    <select id="listOneModules" resultType="com.dguan.project_rent.dto.Module">
+        select * from residence_module where module_slevel = 1
+    </select>
+
+    <select id="listTwoModules"   resultType="com.dguan.project_rent.dto.Module">
+        select * from residence_module
+        where module_slevel = 2 and module_parentId = #{parent.module_id}
+    </select>
+</mapper>

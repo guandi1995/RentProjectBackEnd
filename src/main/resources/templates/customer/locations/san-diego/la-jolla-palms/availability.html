@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-for="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>la jolla palms</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link href="../../../datepicker-in-bootstrap-modal/css/datepicker.css" rel="stylesheet" type="text/css" >
+    <script type="text/javascript" src="../../../datepicker-in-bootstrap-modal/js/datepicker.js" ></script>
+
+    <script type="text/javascript" src="../../../js/vue.min.js"></script>
+    <script type="text/javascript" src="../../../js/axios.js"></script>
+
+    <link href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css" rel="stylesheet"/>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+</head>
+<body>
+
+<!--nav1-->
+<div style="height: 80px">
+    <nav class="navbar  fixed-top navbar-expand-lg navbar-light bg-light shadow p-3 mb-5 rounded" >
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 10%; margin-right: 10%; margin-bottom: 10px">
+            <a class="navbar-brand" href="/">APARTMENT SERVICES</a>
+            <ul class="navbar-nav mr-auto navbar-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="/locations">LOCATIONS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/aboutus">ABOUT US</a>
+                </li>
+            </ul>
+            <button type="button" class="btn btn-outline-secondary my-2 my-sm-0" data-toggle="modal" data-target="#loginModal">
+                RESIDENCES
+            </button>
+        </div>
+    </nav>
+</div>
+
+<!-- login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">LOG IN</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin-left: 30px;margin-right: 30px">
+                <form th:action="@{/cusLogin}" method="post">
+
+                    <div class="form-group">
+                        <label for="username" class="col-form-label">First Name:</label>
+                        <input type="text" class="form-control" id="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="col-form-label">Last Name:</label>
+                        <input type="text" class="form-control" id="password" aria-describedby="passwordHelpInline">
+                    </div>
+
+                    <div class="form-group">
+                        <a href="/signup">create account</a>
+                    </div>
+
+                    <div class="form-group">
+                        <p>username and password does not match</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                        <button type="submit" class="btn btn-warning">LOG IN</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--nav2-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow p-3 mb-5 rounded" >
+
+    <div class="collapse navbar-collapse" style="margin-left: 10%; margin-right: 10%;">
+        <a class="navbar-brand .mr-auto" href="/locations/san-diego/la-jolla-palms">La Jolla Palms</a>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" style="margin-left: 10%; margin-right: 10%;">
+        <ul class="navbar-nav navbar-right">
+            <li class="nav-item">
+                <a class="nav-link" href="/locations/san-diego/la-jolla-palms">OVERVIEW</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/locations/san-diego/la-jolla-palms/availability">AVAILABILITY</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" data-toggle="modal" data-target="#scheduleTourModal" href="">SCHEDULE TOUR</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#contactusModal" href="">CONTACT US</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- schedule a tour Modal -->
+<div class="modal fade" id="scheduleTourModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">SCHEDULE A TOUR</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin-left: 30px;margin-right: 30px">
+                <p>To provide the safest touring experience, we are currently only offering Self-Guided tours.
+                    Select an available date and time below to book your appointment, and a friendly Leasing
+                    Associate will be in touch to create your customized tour. You will also receive instructions
+                    to download TourGuide, our easy-to-use touring mobile app. The app will provide step-by-step
+                    instructions on your mobile device to guide you around the community to the available homes
+                    that meet your needs.</p>
+                <hr>
+                <form>
+
+                    <div class="form-group">
+                        <label for="firstname" class="col-form-label">First Name:</label>
+                        <input type="text" class="form-control" id="firstname">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname" class="col-form-label">Last Name:</label>
+                        <input type="text" class="form-control" id="lastname">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="col-form-label">Email:</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="col-form-label">Phone:</label>
+                        <input type="text" class="form-control" id="phone">
+                    </div>
+
+                    <!--                    datepicker in modal, reference https://www.codehim.com/date-time/bootstrap-datepicker-in-modal-popup-window/-->
+                    <div class="form-group">
+                        <label for="datepicker" class="col-form-label">Desired Tour Date:</label>
+                        <input type="text" class="form-control" data-toggle="datepicker" id="datepicker">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comments" class="col-form-label">Comments:</label>
+                        <textarea class="form-control" rows="5" name=textarea id="comments"></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning">SUBMIT</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        $('[data-toggle="datepicker"]').datepicker({
+            autoHide: true,
+            zIndex: 2048,
+        });
+    });
+</script>
+
+<!--contact us-->
+<div class="modal fade" id="contactusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <h5 class="modal-title">CONTACT US</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body" style="margin-left: 30px;margin-right: 30px">
+                <h6>Leasing Office</h6>
+                844.354.7750<br>
+                3535 Lebon Dr, Ste. 1000 San Diego, CA 92122
+                <hr>
+                <h6>Residence Services</h6>
+                858.784.0100<br>
+                <hr>
+                <h6>Send a Message</h6>
+                <form>
+                    <div class="form-group">
+                        <label for="firstname1" class="col-form-label">First Name:</label>
+                        <input type="text" class="form-control" id="firstname1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastname1" class="col-form-label">Last Name:</label>
+                        <input type="text" class="form-control" id="lastname1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email1" class="col-form-label">Email:</label>
+                        <input type="email" class="form-control" id="email1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone1" class="col-form-label">Phone:</label>
+                        <input type="text" class="form-control" id="phone1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comments1" class="col-form-label">Comments:</label>
+                        <textarea class="form-control" rows="5" name=textarea id="comments1"></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                        <button type="submit" class="btn btn-warning">SUBMIT</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--carousel-->
+<div style="height:950px">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-left: 15%; margin-right: 15%">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="../../../images/customer/la-jolla-palms/img.png"  class="d-block w-100 img-fluid" alt="...">
+            </div>
+        </div>
+
+        </a>
+    </div>
+</div>
+
+<!--jumbotron check availability-->
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-3">Check Availability</h1>
+        <h3 class="display-6">At La Jolla Palms</h3>
+    </div>
+</div>
+
+<div style="margin-left: 15%; margin-right: 15%">
+    <table id="availability" class="table" >
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">PLAN</th>
+            <th scope="col">FLOOR PLAN</th>
+            <th scope="col">BED/BATH</th>
+            <th scope="col">SQ FT</th>
+            <th scope="col">STARTING PRICE</th>
+            <th scope="col">AVAILABLE APARTMENTS</th>
+
+        </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(floorplan,index) in result">
+                <th scope="row">PLAN {{floorplan.floorplan_num}} - {{floorplan.floorplan_name}}</th>
+                <td>
+                    <b-btn v-b-modal="floorplanModalId(index)" variant="outline-secondary">Check</b-btn>
+                    <b-modal :id="'floorplanModal' + index">
+                        <template #modal-header="{ close }">
+                            <h5>FLOOR PLAN {{floorplan.floorplan_num}} - {{floorplan.floorplan_name}}</h5>
+                        </template>
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img :src="`../../../images/customer/la-jolla-palms/${floorplan.img_url}` " width="100%">
+                                </div>
+                            </div>
+                        </div>
+                        <template #modal-footer="{hide }">
+                            <b-button size="md" variant="outline-secondary" @click="hide('forget')">
+                                Hide
+                            </b-button>
+                        </template>
+                    </b-modal>
+                </td>
+                <td>{{floorplan.num_beds}} Bed/{{floorplan.num_baths}} Bath</td>
+                <td>{{floorplan.area}}</td>
+                <td>{{floorplan.starting_price}}</td>
+                <td>
+                    <b-btn v-b-modal="availabilityId(index)" variant="outline-secondary">Check</b-btn>
+                    <b-modal :id="'availabilityModal' + index">
+                        <template #modal-header="{ close }">
+                            <h5>Availability for Plan {{floorplan.floorplan_num}}</h5>
+                        </template>
+                        <div class="modal-dialog">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">APT NO.</th>
+                                    <th scope="col">FLOOR</th>
+                                    <th scope="col">LEASE TERM</th>
+                                    <th scope="col">PRICE</th>
+                                    <th scope="col">AVAILABLE DATE</th>
+                                </tr>
+                                </thead>
+                                <tbody v-for="(avaApt,index) in availableApt" v-if="avaApt.floorplan_id == floorplan.floorplan_id">
+                                <tr>
+                                    <td>{{avaApt.apt_num}}</td>
+                                    <td>{{avaApt.apt_floor}}</td>
+                                    <td>{{avaApt.apt_lease_term}}</td>
+                                    <td>{{avaApt.apt_price}}</td>
+                                    <td>{{avaApt.apt_start_date}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <template #modal-footer="{hide }">
+                            <b-button size="md" variant="outline-secondary" @click="hide('forget')">
+                                Hide
+                            </b-button>
+                        </template>
+                    </b-modal>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    var availability = new Vue({
+        el:"#availability",
+        data:{
+            result:{},
+            availableApt:{},
+        },
+        methods: {
+            floorplanModalId(index) {
+                return 'floorplanModal' + index;
+            },
+            availabilityId(index){
+                return 'availabilityModal' + index;
+            }
+        },
+        mounted: function (){
+            axios.get("/floorplanList").then(function(response){
+                availability.result = response.data;
+            }).catch(function (error){
+                alert(error);
+            });
+
+            axios.get("/checkAvailability").then(function(response){
+                availability.availableApt = response.data;
+            }).catch(function (error){
+                alert(error);
+            });
+        },
+
+    });
+</script>
+
+<!--<div id="app">-->
+<!--    <div v-for="i in 3">-->
+<!--        <b-btn v-b-modal="modalId(i)">Launch demo modal</b-btn>-->
+<!--        <b-modal :id="'modal' + i" title="Bootstrap-Vue">-->
+<!--            <p clas="my-4">Hello from modal {{ i }}!</p>-->
+<!--        </b-modal>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    var app = new Vue({-->
+<!--        el: '#app',-->
+<!--        methods: {-->
+<!--            modalId(i) {-->
+<!--                return 'modal' + i;-->
+<!--            }-->
+<!--        }-->
+<!--    });-->
+
+<!--</script>-->
+
+<div class="jumbotron" style="text-align: center">
+    <h1 class="display-3">Footer</h1>
+    <p class="lead">Our communities are located in Orange County and San Diego County</p>
+    <hr class="my-4">
+    <p>Communities in Los Angeles County is coming soon</p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    </p>
+</div>
+
+
+</body>
+</html>

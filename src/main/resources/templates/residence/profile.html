@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="../js/vue.min.js"></script>
+    <script type="text/javascript" src="../js/axios.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app" style="margin-left: 20%; margin-right: 20%;">
+
+    <el-button type="info" plain @click="dialogFormVisible = true">Update Personal Infomation</el-button>
+
+        <el-form :model="form">
+            <el-dialog title="Update Contact Information" :visible.sync="dialogFormVisible">
+            <el-form-item label="Phone" :label-width="formLabelWidth">
+                <el-input v-model="form.customer_phone"></el-input>
+            </el-form-item>
+            <el-form-item label="Email" :label-width="formLabelWidth">
+                <el-input v-model="form.customer_email"></el-input>
+            </el-form-item>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">CLOSE</el-button>
+                <el-button type="primary" @click="dialogFormVisible = false">SUBMIT</el-button>
+            </div>
+            </el-dialog>
+
+        </el-form>
+
+
+    <el-card class="box-card" style="margin-top: 30px; ">
+        <div slot="header" class="clearfix">
+            <span>Personal Information</span>
+        </div>
+
+        <el-form label-width="100px">
+            <el-form-item label="First Name">
+                <el-input th:value="${session.residence_info.getResidence_firstname()}" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="Last Name">
+                <el-input th:value="${session.residence_info.getResidence_lastname()}" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="Gender">
+                <el-input th:value="${session.residence_info.getResidence_gender()}" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="Date of Birth">
+                <el-input th:value="${#dates.format(session.residence_info.getResidence_birth(), 'yyyy-MM-dd')}" readonly></el-input>
+
+
+            </el-form-item>
+            <el-form-item label="Phone">
+                <el-input th:value="${session.residence_info.getResidence_phone()}" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="Email">
+                <el-input th:value="${session.residence_info.getResidence_email()}" readonly></el-input>
+            </el-form-item>
+
+        </el-form>
+
+    </el-card>
+
+    <el-card class="box-card" style="margin-top: 30px; ">
+        <div slot="header" class="clearfix">
+            <span>Apartment Information</span>
+        </div>
+
+        <el-form label-width="150px">
+            <el-form-item label="Community">
+                <el-input th:value="${session.residence_apt_info.getCommunity_id()}" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="Floor Plan">
+                <el-input th:value="${session.residence_apt_info.getFloorplan_id()}" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="Apartment Number">
+                <el-input th:value="${session.residence_apt_info.getApt_num()}" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="Monthly Payment">
+                <el-input th:value="${session.residence_apt_info.getApt_price()}" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="Lease Term">
+                <el-input th:value="${session.residence_apt_info.getApt_lease_term()}" readonly></el-input>
+            </el-form-item>
+            <el-form-item label="Lease End Date">
+                <el-input th:value="${#dates.format(session.residence_apt_info.getApt_end_date(), 'yyyy-MM-dd')}" readonly></el-input>
+            </el-form-item>
+
+        </el-form>
+
+        </el-form>
+    </el-card>
+
+
+</div>
+
+<script>
+    new Vue({
+        el:"#app",
+        data(){
+            return{
+                dialogTableVisible: false,
+                dialogFormVisible: false,
+                form: {
+                    customer_phone: '',
+                    customer_email: '',
+                },
+                formLabelWidth: '120px'
+            }
+        }
+    });
+</script>
+</body>
+</html>
