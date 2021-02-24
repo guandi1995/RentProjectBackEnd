@@ -12,6 +12,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.ValidationException;
 import java.util.List;
 import java.util.Map;
 
@@ -32,15 +33,24 @@ public class ResidenceSettingsServiceImpl implements ResidenceSettingsService {
         return true;
     }
 
+    /**
+     * send email service
+     * @param emailContent
+     * @return
+     */
     @Override
     public Boolean sendEmail(EmailContent emailContent) {
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom(emailContent.getEmailFrom());
-        simpleMailMessage.setTo(emailContent.getEmailTo());
-        simpleMailMessage.setSubject(emailContent.getName());
-        simpleMailMessage.setText(emailContent.getEmailBody());
-        emailConfig.MailSender().send(simpleMailMessage);
-        return true;
+        try{
+            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+            simpleMailMessage.setFrom(emailContent.getEmailFrom());
+            simpleMailMessage.setTo(emailContent.getEmailTo());
+            simpleMailMessage.setSubject(emailContent.getTitle());
+            simpleMailMessage.setText(emailContent.getEmailBody());
+            emailConfig.MailSender().send(simpleMailMessage);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.dguan.project_rent.dto;
 
-import com.sun.istack.internal.NotNull;
 import lombok.Data;
 
 /**
@@ -9,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class EmailContent {
-    private String name;
+    private String title;
     private String emailFrom;
     private String emailTo;
     private String emailBody;
